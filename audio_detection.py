@@ -33,7 +33,15 @@ class AudioDetection:
     self.validator = AudioEnergyValidator(sample_width=self.sample_width, energy_threshold = energy_threshold)
     self.tokenizer = StreamTokenizer(validator=self.validator, min_length=min_length, max_length=max_length, max_continuous_silence=max_continuous_silence)
 
-    self.audio_folder = 'new_audios/'
+    self.audio_folder = 'recordings/' + '{:%Y-%m-%d_%H-%M-%S}'.format(datetime.datetime.now()) + '/'
+    if not os.path.exists(os.path.dirname(self.audio_folder)):
+      try:
+          os.makedirs(os.path.dirname(self.audio_folder))
+      except OSError as exc: # Guard against race condition
+          if exc.errno != errno.EEXIST:
+              raiseRec
+    os.chmod('recordings', 0o777)
+    os.chmod(self.audio_folder, 0o777)
     self.MODE = 'ECHO'
 
     self.useGui = True
@@ -75,9 +83,9 @@ class AudioDetection:
         sys.exit(0)
 
   def onDetection(self, data, start, end):
-    log = "Acoustic activity at: {0}--{1}".format(start, end)
-    print(log)
-    self.display.display_text(log)
+    name = "{0}-{1}".format(start, end) + '.wav'
+    print(name)
+    self.display.display_text(name)
     filename = self.savefile(data, start, end)
     print('current mode', self.MODE)
     self.display.set_state('PLAYING')
@@ -92,15 +100,8 @@ class AudioDetection:
     self.display.set_state(self.MODE)
 
   def savefile(self, data, start, end):
-    filename = self.audio_folder + '{:%Y-%m-%d_%H:%M:%S}'.format(datetime.datetime.now())
-    # filename = audio_folder + "teste_{0}_{1}.wav".format(start, end)      
-    # create folder if 'audios' doesnt exist
-    if not os.path.exists(os.path.dirname(filename)):
-        try:
-            os.makedirs(os.path.dirname(filename))
-        except OSError as exc: # Guard against race condition
-            if exc.errno != errno.EEXIST:
-                raiseRec
+    name = "{0}-{1}".format(start, end) + '.wav'
+    filename = self.audio_folder + name
 
     # save wav file
     waveFile = wave.open(filename, 'wb')

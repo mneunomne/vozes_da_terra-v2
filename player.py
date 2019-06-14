@@ -12,7 +12,7 @@ import wave
 CHUNK = 1024
 
 def getRandomFile():
-  files = listFiles('audios/')
+  files = listFiles('playlist/')
   filename = getNextFile(files)
   return filename
 
