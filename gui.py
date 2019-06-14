@@ -4,6 +4,7 @@ fullscreen = False
 class GUI:
 	def __init__(self, root):
 		self.root = root
+		self.widget = Label(self.root, text='')
 		self.w, self.h = root.winfo_screenwidth(), root.winfo_screenheight()
 		self.root.overrideredirect(fullscreen)
 		self.root.geometry("%dx%d+0+0" % (self.w, self.h))
@@ -14,14 +15,10 @@ class GUI:
 		self.root.update()
 
 	def set_state(self, state):
-		w = Label(self.root, text="Hello, world!")
-		w.pack()
 		if state == 'echo':
-			self.change_color("white")
-		if state == 'random':
-			self.change_color("purple")
-		if state == 'oraculo':
 			self.change_color("green")
+		if state == 'random':
+			self.change_color("red")
 		elif state == 'playing':
 			self.change_color("blue")
 		self.update()
@@ -31,6 +28,7 @@ class GUI:
 		self.root.configure(background=color)
   
 	def display_text(self, text):
-		w = Label(self.root, text=text)
-		w.pack()
+		self.widget.pack_forget()
+		self.widget = Label(self.root, text=text)
+		self.widget.pack()
 		self.update()
