@@ -122,11 +122,6 @@ class AudioDetection:
   def match_target_amplitude(self, sound, target_dBFS):
     change_in_dBFS = target_dBFS - sound.dBFS
     return sound.apply_gain(change_in_dBFS)
-
-  def change_state(self):
-    while not self.q.empty:
-      print self.q.get()
-      self.q.task_done()
     
 ad = AudioDetection(True)
 ad.start()
