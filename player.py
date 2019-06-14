@@ -11,8 +11,8 @@ import pyaudio
 import wave
 CHUNK = 1024
 
-def getRandomFile():
-  files = listFiles('playlist/')
+def getRandomFile(folder = 'test/'):
+  files = listFiles(folder)
   filename = getNextFile(files)
   return filename
 

@@ -12,11 +12,23 @@ from argparse import ArgumentParser
 from gui import *
 
 parser = ArgumentParser()
-parser.add_argument("-g", "--GUI", dest="settings",
-                    help="Display Graphic Interface", default=False)
+parser.add_argument("-g", "--gui", dest="gui",
+                    help="Display Graphic Interface", action='store_true')
+
+parser.add_argument("-f", "--folder", dest="folder",
+                    help="Display Graphic Interface", default='test/')
+
+args = parser.parse_args()
+
+play_folder = args.folder
+
+useGui = args.gui
+
+print('play_folder', play_folder)
+print('useGui', useGui)
 
 class AudioDetection:
-  def __init__(self, useGui):
+  def __init__(self, _useGui):
     # parametros de áudio
     max_length = 1000000
     max_interval = 12000
@@ -44,7 +56,7 @@ class AudioDetection:
     os.chmod(self.audio_folder, 0o777)
     self.MODE = 'ECHO'
 
-    self.useGui = True
+    self.useGui = _useGui
 
     if self.useGui:
       root = Tk()
@@ -90,7 +102,7 @@ class AudioDetection:
     print('current mode', self.MODE)
     self.display.set_state('PLAYING')
     if self.MODE == 'RANDOM':
-      randomfile = player.getRandomFile()
+      randomfile = player.getRandomFile(play_folder)
       self.display.display_text('playing random ' + randomfile)
       player.play(randomfile)
     if self.MODE == 'ECHO':
@@ -124,5 +136,5 @@ class AudioDetection:
     change_in_dBFS = target_dBFS - sound.dBFS
     return sound.apply_gain(change_in_dBFS)
     
-ad = AudioDetection(True)
+ad = AudioDetection(useGui)
 ad.start()
