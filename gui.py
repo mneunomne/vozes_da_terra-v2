@@ -9,17 +9,19 @@ class GUI:
 		self.root.overrideredirect(fullscreen)
 		self.root.geometry("%dx%d+0+0" % (self.w, self.h))
 		self.root.configure(background="blue")
-		self.root.config(cursor="")
+		# self.root.config(cursor="")
+
 	def update(self):
 		self.root.update_idletasks()
 		self.root.update()
 
 	def set_state(self, state):
-		if state == 'echo':
+		print('change state!!!', state)
+		if state == 'ECHO':
 			self.change_color("green")
-		if state == 'random':
+		if state == 'RANDOM':
 			self.change_color("red")
-		elif state == 'playing':
+		elif state == 'PLAYING':
 			self.change_color("blue")
 		self.update()
 
