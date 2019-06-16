@@ -18,9 +18,14 @@ parser.add_argument("-g", "--gui", dest="gui",
 parser.add_argument("-f", "--folder", dest="folder",
                     help="Display Graphic Interface", default='playlist/')
 
+parser.add_argument("-t", "--threshold", dest="threshold",
+                    help="Audio Detection Threshold", default='51')
+
 args = parser.parse_args()
 
 play_folder = args.folder
+
+energy_threshold = args.threshold
 
 useGui = args.gui
 
@@ -34,7 +39,6 @@ class AudioDetection:
     max_interval = 12000
     max_continuous_silence = 500
     min_length = 150
-    energy_threshold = 51
     
     self.sample_rate = 48000
     self.asource = ADSFactory.ads(record=True, max_time = max_length, sampling_rate = self.sample_rate)
