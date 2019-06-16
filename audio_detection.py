@@ -16,7 +16,7 @@ parser.add_argument("-g", "--gui", dest="gui",
                     help="Display Graphic Interface", action='store_true')
 
 parser.add_argument("-f", "--folder", dest="folder",
-                    help="Display Graphic Interface", default='test/')
+                    help="Display Graphic Interface", default='playlist/')
 
 args = parser.parse_args()
 
