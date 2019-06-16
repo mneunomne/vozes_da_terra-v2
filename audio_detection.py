@@ -19,13 +19,13 @@ parser.add_argument("-f", "--folder", dest="folder",
                     help="Display Graphic Interface", default='playlist/')
 
 parser.add_argument("-t", "--threshold", dest="threshold",
-                    help="Audio Detection Threshold", default='51')
+                    help="Audio Detection Threshold", default=51)
 
 args = parser.parse_args()
 
 play_folder = args.folder
 
-energy_threshold = args.threshold
+energy_threshold = int(args.threshold)
 
 useGui = args.gui
 
