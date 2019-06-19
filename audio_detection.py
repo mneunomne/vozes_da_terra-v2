@@ -64,7 +64,8 @@ class AudioDetection:
 
     if self.useGui:
       root = Tk()
-      self.display = GUI(root)
+      self.display = GUI(root, True)
+      self.display.display_image()
 
   def start(self):
     self.listener = keyboard.Listener(
@@ -75,8 +76,6 @@ class AudioDetection:
 
   def listen(self):
     ## abrir microfone
-    if self.useGui:
-      self.display.set_state(self.MODE)
     self.asource.open()
     print("\n  ** Listening!!!")      
     ## começar tokenizer
@@ -101,19 +100,15 @@ class AudioDetection:
   def onDetection(self, data, start, end):
     name = "{0}-{1}".format(start, end) + '.wav'
     print(name)
-    self.display.display_text(name)
     filename = self.savefile(data, start, end)
     print('current mode', self.MODE)
-    self.display.set_state('PLAYING')
     if self.MODE == 'RANDOM':
       randomfile = player.getRandomFile(play_folder)
-      self.display.display_text('playing random ' + randomfile)
       player.play(randomfile)
     if self.MODE == 'ECHO':
-      self.display.display_text('playing recorded ' + filename)
       player.play(filename)
+    self.display.display_image()
     print("finished playing")
-    self.display.set_state(self.MODE)
 
   def savefile(self, data, start, end):
     name = "{0}-{1}".format(start, end) + '.wav'

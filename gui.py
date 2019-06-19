@@ -1,11 +1,10 @@
 from tkinter import *
 from PIL import Image, ImageTk
-fullscreen = False
 import glob
 import random
 
 class GUI:
-	def __init__(self, root):
+	def __init__(self, root, fullscreen):
 		self.root = root
 		self.widget = Label(self.root, text='')
 		self.w, self.h = root.winfo_screenwidth(), root.winfo_screenheight()
@@ -13,7 +12,6 @@ class GUI:
 		self.root.geometry("%dx%d+0+0" % (self.w, self.h))
 		self.root.configure(background="blue")
 		self.imgLabel = Label(self.root)
-		self.display_image()
 		# self.root.config(cursor="")
 
 	def update(self):
@@ -34,7 +32,6 @@ class GUI:
 
 	def set_state(self, state):
 		print('change state!!!', state)
-		self.display_image()
 		return
 		if state == 'ECHO':
 			self.change_color("green")
@@ -48,7 +45,7 @@ class GUI:
 		return
 		print('change color:', color)
 		self.root.configure(background=color)
-  
+	
 	def display_text(self, text):
 		return
 		self.widget.pack_forget()
